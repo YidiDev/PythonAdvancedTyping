@@ -70,6 +70,9 @@ jobs:
           ./dist/*.whl
 
     # Create a GitHub Release if it doesn't exist
+    - name: List directory contents
+      run: ls -la
+
     - name: Get version from package
       id: get_version
       run: |
