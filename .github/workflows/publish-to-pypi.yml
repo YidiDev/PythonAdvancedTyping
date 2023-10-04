@@ -68,6 +68,17 @@ jobs:
         inputs: >-
           ./dist/*.tar.gz
           ./dist/*.whl
+
+    # Create a GitHub Release if it doesn't exist
+    - name: Create GitHub Release
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      run: |
+        if ! gh release view ${{ github.ref_name }}; then
+          gh release create ${{ github.ref_name }}
+        fi
+
+    # Upload the artifacts to the created/retrieved GitHub Release
     - name: Upload artifact signatures to GitHub Release
       env:
         GITHUB_TOKEN: ${{ github.token }}

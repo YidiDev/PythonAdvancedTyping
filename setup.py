@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="python-advanced-typing",
-    version="0.3",
+    version="0.4",
     packages=find_packages(),
     install_requires=[],
     author="Yidi Sprei",
