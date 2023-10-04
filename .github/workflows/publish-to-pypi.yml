@@ -71,7 +71,9 @@ jobs:
 
     # Create a GitHub Release if it doesn't exist
     - name: List directory contents
-      run: ls -la
+      run: |
+        pwd
+        find .
 
     - name: Get version from package
       id: get_version
