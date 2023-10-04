@@ -70,19 +70,23 @@ jobs:
           ./dist/*.whl
 
     # Create a GitHub Release if it doesn't exist
+    - name: Get version from package
+      id: get_version
+      run: |
+        VERSION=$(python setup.py --version)
+        echo "PACKAGE_VERSION=$VERSION" >> $GITHUB_ENV
+        echo "::set-output name=version::$VERSION"
+
     - name: Create GitHub Release
       env:
         GITHUB_TOKEN: ${{ github.token }}
       run: |
-        if ! gh release view ${{ github.ref_name }}; then
-          gh release create ${{ github.ref_name }}
-        fi
+        gh release create "main-v${PACKAGE_VERSION}" || echo "Release 'main-v${PACKAGE_VERSION}' might already exist. Proceeding..."
 
-    # Upload the artifacts to the created/retrieved GitHub Release
     - name: Upload artifact signatures to GitHub Release
       env:
         GITHUB_TOKEN: ${{ github.token }}
-      run: >-
+      run: >
         gh release upload
-        '${{ github.ref_name }}' dist/**
+        "main-v${PACKAGE_VERSION}" dist/**
         --repo '${{ github.repository }}'
