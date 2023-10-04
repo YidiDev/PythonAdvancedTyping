@@ -73,7 +73,6 @@ jobs:
     - name: Get version from package
       id: get_version
       run: |
-        cd $GITHUB_WORKSPACE/PythonAdvancedTyping
         VERSION=$(python setup.py --version)
         echo "PACKAGE_VERSION=$VERSION" >> $GITHUB_ENV
 
