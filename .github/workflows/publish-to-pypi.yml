@@ -70,14 +70,10 @@ jobs:
           ./dist/*.whl
 
     # Create a GitHub Release if it doesn't exist
-    - name: List directory contents
-      run: |
-        cd ..
-        ls -la
-
     - name: Get version from package
       id: get_version
       run: |
+        cd ..
         VERSION=$(python setup.py --version)
         echo "PACKAGE_VERSION=$VERSION" >> $GITHUB_ENV
 
