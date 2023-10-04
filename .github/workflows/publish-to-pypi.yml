@@ -70,16 +70,10 @@ jobs:
           ./dist/*.whl
 
     # Create a GitHub Release if it doesn't exist
-    - name: Debug directory structure
-      run: |
-        pwd
-        find .
-        cat ./PythonAdvancedTyping/setup.py || echo "setup.py not found!"
     - name: Get version from package
       id: get_version
       run: |
-        cd ..
-        VERSION=$(python setup.py --version)
+        VERSION=$(python /home/runner/work/PythonAdvancedTyping/PythonAdvancedTyping/setup.py --version)
         echo "PACKAGE_VERSION=$VERSION" >> $GITHUB_ENV
 
     - name: Create GitHub Release
