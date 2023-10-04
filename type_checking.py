@@ -26,33 +26,32 @@ def check_individual_type(variable: any, variable_name: str, expected_type_or_ty
         raise TypeError(f"Expected type {expected_type_or_types} for {variable_name}. Instead got {type(variable)}.")
 
 
-def check_type(
-        variable: any = None,
-        variable_name: str = None,
-        expected_type_or_types: type | tuple[type] = None,
-        list_of_type_checks: list[tuple[any, str, type | tuple[type]]] = None
-) -> None:
+def check_type(*args) -> None:
     """
-        Check the type of a variable against the expected type or types, or perform multiple checks in a list.
+    Check the type of a variable against the expected type or types, or perform multiple checks in a list.
 
-        Parameters:
-        - variable (any): The variable to be checked.
-        - variable_name (str): The name of the variable (for error messaging purposes).
-        - expected_type_or_types (type or tuple of types): The expected type or a tuple of expected types for the variable.
-        - list_of_type_checks (list of tuples): A list of tuples containing variables, their names, and their expected types.
+    Usage:
+    - check_type(variable, variable_name, expected_type_or_types)
+    - check_type((variable1, variable_name1, expected_type_or_types1),
+    (variable2, variable_name2, expected_type_or_types2), ...)
 
-        Raises:
-        - ValueError: If improper inputs are provided.
-        - TypeError: If the variable type does not match the expected type or types.
-        """
+    Raises:
+    - ValueError: If improper inputs are provided.
+    - TypeError: If the variable type does not match the expected type or types.
+    """
 
-    if list_of_type_checks:
-        for var, var_name, expected in list_of_type_checks:
-            check_individual_type(var, var_name, expected)
-    elif variable is not None and variable_name is not None and expected_type_or_types is not None:
-        check_individual_type(variable, variable_name, expected_type_or_types)
-    else:
-        raise ValueError(
-            "Invalid input to check_type. Provide either a variable, variable_name, and expected_type_or_types "
-            "OR a list_of_type_checks."
-        )
+    if not args:
+        raise ValueError("No arguments provided to check_type.")
+
+    if len(args) == 3 and isinstance(args[1], str) and (isinstance(args[2], type) or isinstance(args[2], tuple)):
+        var, var_name, expected = args
+        check_individual_type(var, var_name, expected)
+        return
+
+    for arg in args:
+        if not isinstance(arg, tuple) or len(arg) != 3:
+            raise ValueError("Invalid input format for check_type.")
+        var, var_name, expected = arg
+        if not (isinstance(var_name, str) and (isinstance(expected, type) or isinstance(expected, tuple))):
+            raise ValueError("Invalid input format for check_type.")
+        check_individual_type(var, var_name, expected)

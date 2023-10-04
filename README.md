@@ -1,14 +1,14 @@
 
 # Python Advanced Typing
 
-## General Details
+## Overview
 
 ### Description
 
 `python-advanced-typing` is a simple Python package to help developers validate the types of variables in their codebase. With support for checking individual variables or multiple variables at once, it offers a concise way to ensure that the data you're working with meets your expectations.
 ### Features
-- Check the type of a single variable against an expected type or a tuple of expected types.
-- Bulk check the types of multiple variables using a list.
+- **Single Variable Check**: Compare a variable's type against a specific type or multiple acceptable types.
+- **Bulk Verification**: Validate the types of multiple variables simultaneously using a list.
 ## Setup Instructions
 **Install the Package using**:
 
@@ -22,7 +22,7 @@ pip install python-advanced-typing
 from python_advanced_typing import check_type
 
 x = "Hello"
-check_type(variable=x, variable_name="x", expected_type_or_types=str)
+check_type(x, "x", str)
 ```
 ### Bulk Check Multiple Variables
 ```python
@@ -32,12 +32,11 @@ x = "Hello"
 y = 123
 z = [1, 2, 3]
 
-checks = [
+check_type(
     (x, "x", str),
     (y, "y", int),
     (z, "z", list)
-]
-check_type(list_of_type_checks=checks)
+)
 ```
 
 ## Contributing
@@ -76,6 +75,6 @@ Go to your forked repository on GitHub and click the "New Pull Request" button. 
 
 Remember to always be respectful and kind in all interactions with the community. It's all about learning, growing, and helping each other succeed!
 
-## Credits
-Developed with 💙 by Yidi Sprei. We thank all the contributors and the Python community for their support and inspiration.
+## Acknowledgments
+Crafted with 💙 by Yidi Sprei. Kudos to all contributors and the expansive Python community for encouragement and motivation.
 
